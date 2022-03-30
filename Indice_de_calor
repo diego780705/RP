@@ -1,7 +1,5 @@
 function calIndCalor() {
  var id;
- // Referência: http://www.hpc.ncep.noaa.gov/html/heatindex_equation.shtml
- // HI = -42.379 + 2.04901523*T + 10.14333127*RH - .22475541*T*RH - .00683783*T*T - .05481717*RH*RH + .00122874*T*T*RH + .00085282*T*RH*RH - .00000199*T*T*RH*RH
  var tempF = msg.payload[0];
  var umR = msg.payload[1];
  if (tempF !== "" && umR !== "") {
