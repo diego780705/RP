@@ -1,0 +1,12 @@
+# CONFIGURAR "Domain" COMO "Notify"
+# CONFIGURAR "sERVICE" COMO "alexa_media"
+
+data:
+
+{
+    "data": {
+        "type": "tts"
+    },
+    "message": "{{payload}}", 
+    "target": "ALEXA_QUE_FALARÁ"
+}
