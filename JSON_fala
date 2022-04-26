@@ -1,7 +1,5 @@
 {
-    "data": {
-        "type": "tts"
-    },
-    "message": "{{payload}}",
-    "target": "ALEXA_QUE_FALARÁ"
+    "data": {"type": "tts"},
+    "message": "MENSAGEM QUE ALEXAR FALARÁ",
+    "target": "{{payload_alexa}}"
 }
