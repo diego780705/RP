@@ -1,0 +1,31 @@
+#!/bin/bash
+
+sudo -i
+
+sleep 1
+
+fallocate -l 3G /swapfile
+
+sleep 1
+
+chmod 600 /swapfile
+
+sleep 1
+
+mkswap /swapfile
+
+sleep 1
+
+swapon /swapfile
+
+sleep 1
+
+swapon --show
+
+sleep 1
+
+cp /etc/fstab /etc/fstab.bak
+
+sleep 1
+
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
