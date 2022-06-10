@@ -2,6 +2,14 @@
 
 sudo -i
 
+sleep 2
+
+timedatectl set-timezone America/Sao_Paulo
+
+sleep 2
+
+apt update -y && sudo apt dist-upgrade -y && sudo apt autoremove -y 
+
 sleep 1
 
 fallocate -l 3G /swapfile
