@@ -2,6 +2,12 @@
 
 sudo -i
 
+apt list --upgradable
+
+sleep 2
+
+apt --fix-broken install
+
 sleep 2
 
 timedatectl set-timezone America/Sao_Paulo
