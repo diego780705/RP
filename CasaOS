@@ -1,0 +1,38 @@
+#!/bin/bash
+
+sudo -i
+
+apt list --upgradable
+apt --fix-broken install
+
+timedatectl set-timezone America/Sao_Paulo
+
+apt update -y && sudo apt dist-upgrade -y && sudo apt autoremove -y 
+
+fallocate -l 3G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show
+cp /etc/fstab /etc/fstab.bak
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+apt-get install \
+jq \
+wget \
+curl \
+udisks2 \
+libglib2.0-bin \
+network-manager \
+iputils-ping \
+firewalld \
+vim \
+openssh-server \
+dbus -y
+
+curl -fsSL https://get.icewhale.io/casaos.sh | bash
+
+systemctl enable firewalld
+firewall-cmd --permanent --add-port=1-65535/tcp
+firewall-cmd --reload
+systemctl start firewalld
