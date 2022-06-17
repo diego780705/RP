@@ -32,6 +32,11 @@ dbus -y
 
 curl -fsSL https://get.icewhale.io/casaos.sh | bash
 
+wget https://github.com/diego780705/HomeAssistant/raw/a13052d267deeccb6814d47d5f6570ba9536f4e0/os-agent_1.2.2_linux_x86_64.deb
+dpkg -i os-agent_1.2.2_linux_x86_64.deb
+wget https://github.com/diego780705/HomeAssistant/raw/3e54068c33895aaa14229ca0347f3dd428cfd35f/homeassistant-supervised.deb
+dpkg -i homeassistant-supervised.deb
+
 systemctl enable firewalld
 firewall-cmd --permanent --add-port=1-65535/tcp
 firewall-cmd --reload
