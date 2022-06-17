@@ -3,20 +3,11 @@
 sudo -i
 
 apt list --upgradable
-
-sleep 2
-
 apt --fix-broken install
-
-sleep 2
 
 timedatectl set-timezone America/Sao_Paulo
 
-sleep 2
-
 apt update -y && sudo apt dist-upgrade -y && sudo apt autoremove -y 
-
-sleep 1
 
 apt-get install \
 jq \
@@ -31,46 +22,15 @@ vim \
 openssh-server \
 dbus -y
 
-sleep 1
-
 fallocate -l 3G /swapfile
-
-sleep 1
-
 chmod 600 /swapfile
-
-sleep 1
-
 mkswap /swapfile
-
-sleep 1
-
 swapon /swapfile
-
-sleep 1
-
 swapon --show
-
-sleep 1
-
 cp /etc/fstab /etc/fstab.bak
-
-sleep 1
-
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
-sleep 2
-
 systemctl enable firewalld
-
-sleep 2
-
 firewall-cmd --permanent --add-port=1-65535/tcp
-
-sleep 2
-
 firewall-cmd --reload
-
-sleep 2
-
 systemctl start firewalld
