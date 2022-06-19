@@ -7,7 +7,7 @@ apt --fix-broken install
 
 timedatectl set-timezone America/Sao_Paulo
 
-apt update -y && sudo apt dist-upgrade -y && sudo apt autoremove -y 
+apt update -y && apt upgrade -y && apt autoremove -y 
 
 apt-get install \
 jq \
