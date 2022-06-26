@@ -1,0 +1,77 @@
+#!/bin/bash
+
+sudo -i
+
+timedatectl set-timezone America/Sao_Paulo
+
+apt update -y && apt upgrade -y && apt autoremove -y 
+
+apt-get install \
+jq \
+wget \
+curl \
+udisks2 \
+libglib2.0-bin \
+network-manager \
+iputils-ping \
+firewalld \
+vim \
+openssh-server \
+dbus -y
+
+fallocate -l 3G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show
+cp /etc/fstab /etc/fstab.bak
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+systemctl enable firewalld
+firewall-cmd --permanent --add-port=1-65535/tcp
+firewall-cmd --reload
+systemctl start firewalld
+
+echo "Include /etc/ssh/sshd_config.d/*.conf" > /etc/ssh/sshd_config
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+echo "ChallengeResponseAuthentication no" >> /etc/ssh/sshd_config
+echo "UsePAM yes" >> /etc/ssh/sshd_config
+echo "X11Forwarding yes" >> /etc/ssh/sshd_config
+echo "PrintMotd no" >> /etc/ssh/sshd_config
+echo "AcceptEnv LANG LC_*" >> /etc/ssh/sshd_config
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+echo "Subsystem       sftp    /usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
+service ssh restart
+
+apt install -y mosquitto mosquitto-clients
+
+systemctl enable mosquitto.service
+
+apt-get install -y nodejs npm git make g++ gcc
+
+git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git
+
+mv zigbee2mqtt /opt/zigbee2mqtt
+
+cd /opt/zigbee2mqtt
+
+npm ci
+
+echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
+echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
+echo "After=network.target" >> /etc/systemd/system/zigbee2mqtt.service
+echo "[Service]" >> /etc/systemd/system/zigbee2mqtt.service
+echo "ExecStart=/usr/bin/npm start" >> /etc/systemd/system/zigbee2mqtt.service
+echo "WorkingDirectory=/opt/zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
+echo "StandardOutput=inherit" >> /etc/systemd/system/zigbee2mqtt.service
+echo "StandardError=inherit" >> /etc/systemd/system/zigbee2mqtt.service
+echo "Restart=always" >> /etc/systemd/system/zigbee2mqtt.service
+echo "RestartSec=10s" >> /etc/systemd/system/zigbee2mqtt.service
+echo "User=pi" >> /etc/systemd/system/zigbee2mqtt.service
+echo "[Install]" >> /etc/systemd/system/zigbee2mqtt.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/zigbee2mqtt.service
+
+systemctl start zigbee2mqtt
+
+systemctl enable zigbee2mqtt.service
