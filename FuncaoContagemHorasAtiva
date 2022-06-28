@@ -77,7 +77,7 @@ if (diaanterior < diaatual) {
     dia = (diaatual + mes) - diaanterior
 }
 
-msg.payload_inicio = mesanterior + "/" + diaanterior + "-" + horaanterior + ":" + minutoanterior
+msg.payload_inicial = mesanterior + "/" + diaanterior + "-" + horaanterior + ":" + minutoanterior
 msg.payload_final = mesatual + "/" + diaatual + "-" + horaatual + ":" + minutoatual
 msg.payload = (dia * 24) + parseInt(hora) + ":" + minuto
 
