@@ -51,7 +51,7 @@ cd /etc/openvpn/
 
 echo "dev tun" > /etc/openvpn/servidor.conf
 echo "proto udp" >> /etc/openvpn/servidor.conf
-echo "porta 1194" >> /etc/openvpn/servidor.conf
+echo "port 1194" >> /etc/openvpn/servidor.conf
 echo "compress lz4" >> /etc/openvpn/servidor.conf
 echo "ifconfig 10.1.0.1 10.1.0.2" >> /etc/openvpn/servidor.conf
 echo "route 192.168.1.1 255.255.255.0 10.1.0.2" >> /etc/openvpn/servidor.conf
