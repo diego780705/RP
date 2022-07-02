@@ -56,7 +56,7 @@ echo "port 1194" >> /etc/openvpn/cliente.conf
 echo "compress lz4" >> /etc/openvpn/cliente.conf
 echo "ifconfig 10.1.0.2 10.1.0.1" >> /etc/openvpn/cliente.conf
 echo "route 192.168.1.140 255.255.255.0 10.1.0.1" >> /etc/openvpn/cliente.conf
-echo "secret matriz.kez" >> /etc/openvpn/cliente.conf
+echo "secret matriz.key" >> /etc/openvpn/cliente.conf
 echo "persist-tun" >> /etc/openvpn/cliente.conf
 echo "persist-key" >> /etc/openvpn/cliente.conf
 echo "ping 15" >> /etc/openvpn/cliente.conf
