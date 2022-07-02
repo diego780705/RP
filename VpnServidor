@@ -44,8 +44,8 @@ echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "Subsystem       sftp    /usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
 service ssh restart
 
-apt install openvpn easy-rsa
-apt install openvpn
+apt install openvpn easy-rsa -y
+apt install openvpn -y
 
 cd /etc/openvpn/
 
