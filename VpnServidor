@@ -49,9 +49,10 @@ apt install openvpn -y
 
 cd /etc/openvpn/
 
+echo "port 1194" >> /etc/openvpn/servidor.conf
+echo "server 10.8.0.0 255.255.255.0" >> /etc/openvpn/servidor.conf
 echo "dev tun" > /etc/openvpn/servidor.conf
 echo "proto udp" >> /etc/openvpn/servidor.conf
-echo "port 1194" >> /etc/openvpn/servidor.conf
 echo "compress lz4" >> /etc/openvpn/servidor.conf
 echo "secret matriz.key" >> /etc/openvpn/servidor.conf
 echo "persist-tun" >> /etc/openvpn/servidor.conf
