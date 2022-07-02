@@ -52,7 +52,7 @@ cd /etc/openvpn/
 echo "dev tun" > /etc/openvpn/cliente.conf
 echo "proto udp" >> /etc/openvpn/cliente.conf
 echo "remote 0.0.0.0" >> /etc/openvpn/cliente.conf
-echo "porta 1194" >> /etc/openvpn/cliente.conf
+echo "port 1194" >> /etc/openvpn/cliente.conf
 echo "compress lz4" >> /etc/openvpn/cliente.conf
 echo "ifconfig 10.1.0.2 10.1.0.1" >> /etc/openvpn/cliente.conf
 echo "route 192.168.1.140 255.255.255.0 10.1.0.1" >> /etc/openvpn/cliente.conf
