@@ -51,8 +51,9 @@ cd /etc/openvpn/
 
 echo "dev tun" > /etc/openvpn/cliente.conf
 echo "proto udp" >> /etc/openvpn/cliente.conf
-echo "remote 0.0.0.0" >> /etc/openvpn/cliente.conf
-echo "port 1194" >> /etc/openvpn/cliente.conf
+echo "remote 127.0.0.1 1194" >> /etc/openvpn/cliente.conf
+echo "nobind" >> /etc/openvpn/cliente.conf
+echo "resolv-retry infinite" >> /etc/openvpn/cliente.conf
 echo "compress lz4" >> /etc/openvpn/cliente.conf
 echo "secret matriz.key" >> /etc/openvpn/cliente.conf
 echo "persist-tun" >> /etc/openvpn/cliente.conf
