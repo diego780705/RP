@@ -58,6 +58,7 @@ echo "# user: my_user" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "# password: my_password" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "serial:" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  port: /dev/ttyACM0" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "frontend: true" >> /opt/zigbee2mqtt/data/configuration.yaml
 
 echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
 echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
