@@ -1,11 +1,13 @@
 #!/bin/bash
 
 sudo -i
-
+#AJUSTA O FUSO DA MAQUINA
 timedatectl set-timezone America/Sao_Paulo
 
+#FAZ UMA ATUALIZAÇÃO COMPLETA DO SISTEMA
 apt update -y && apt upgrade -y && apt autoremove -y 
 
+#INSTALA REQUISITOS SISTEMICOS BASICOS PARA USO EM GERAL
 apt-get install \
 jq \
 wget \
@@ -19,6 +21,7 @@ vim \
 openssh-server \
 dbus -y
 
+#AMPLIA A MEMORIA DO UBUNTU PARA EVITAR TRAVAMENTOS
 fallocate -l 3G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
@@ -27,11 +30,13 @@ swapon --show
 cp /etc/fstab /etc/fstab.bak
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
+#ABRE AS PORTAS DO SISTEMA
 systemctl enable firewalld
 firewall-cmd --permanent --add-port=1-65535/tcp
 firewall-cmd --reload
 systemctl start firewalld
 
+#CONFIGURA O ACESSO SSH BASICO
 echo "Include /etc/ssh/sshd_config.d/*.conf" > /etc/ssh/sshd_config
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
@@ -44,13 +49,14 @@ echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "Subsystem       sftp    /usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
 service ssh restart
 
-#instalação zigbee2mqtt
+#INSTALA A BASE DO ZIGBEE2MQTT
 curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 apt-get install -y nodejs git make g++ gcc
 git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
 cd /opt/zigbee2mqtt
 npm ci
 
+#ESCREVE O ARQUIVO DE CONFIGURAÇÃO DO ZIGBEE2MQTT
 echo "mqtt:" > /opt/zigbee2mqtt/data/configuration.yaml
 echo "  base_topic: zigbee2mqtt" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  server: 'mqtt://localhost'" >> /opt/zigbee2mqtt/data/configuration.yaml
@@ -60,6 +66,7 @@ echo "serial:" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  port: /dev/ttyACM0" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "frontend: true" >> /opt/zigbee2mqtt/data/configuration.yaml
 
+#ESCREVE O ARQUIVO DE EXECUÇÃO EM SEGUNDO PLANO E INICIALIZAÇÃO AUTOMATICA DO SISTEMA ZIGBEE 
 echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
 echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
 echo "After=network.target" >> /etc/systemd/system/zigbee2mqtt.service
@@ -74,6 +81,7 @@ echo "User=root" >> /etc/systemd/system/zigbee2mqtt.service
 echo "[Install]" >> /etc/systemd/system/zigbee2mqtt.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/zigbee2mqtt.service
 
+#FINALIZA E INICIA O ZIGBEE2MQTT
 systemctl start zigbee2mqtt
 systemctl enable zigbee2mqtt.service
 cd /opt/zigbee2mqtt
