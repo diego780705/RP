@@ -64,6 +64,9 @@ echo "# password: my_password" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "serial:" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  port: /dev/ttyACM0" >> /opt/zigbee2mqtt/data/configuration.yaml
 
+cd /opt/zigbee2mqtt
+npm start
+
 echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
 echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
 echo "After=network.target" >> /etc/systemd/system/zigbee2mqtt.service
