@@ -45,15 +45,10 @@ echo "Subsystem       sftp    /usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_con
 service ssh restart
 
 #instalação zigbee2mqtt
-
 curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-
 apt-get install -y nodejs git make g++ gcc
-
 git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
-
 cd /opt/zigbee2mqtt
-
 npm ci
 
 echo "mqtt:" > /opt/zigbee2mqtt/data/configuration.yaml
@@ -63,9 +58,6 @@ echo "# user: my_user" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "# password: my_password" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "serial:" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  port: /dev/ttyACM0" >> /opt/zigbee2mqtt/data/configuration.yaml
-
-cd /opt/zigbee2mqtt
-npm start
 
 echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
 echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
@@ -82,5 +74,6 @@ echo "[Install]" >> /etc/systemd/system/zigbee2mqtt.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/zigbee2mqtt.service
 
 systemctl start zigbee2mqtt
-
 systemctl enable zigbee2mqtt.service
+cd /opt/zigbee2mqtt
+npm start
