@@ -44,19 +44,25 @@ echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "Subsystem       sftp    /usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
 service ssh restart
 
-apt install -y mosquitto mosquitto-clients
+#instalação zigbee2mqtt
 
-systemctl enable mosquitto.service
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 
-apt-get install -y nodejs npm git make g++ gcc
+apt-get install -y nodejs git make g++ gcc
 
-git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git
-
-mv zigbee2mqtt /opt/zigbee2mqtt
+git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
 
 cd /opt/zigbee2mqtt
 
 npm ci
+
+echo "mqtt:" > /opt/zigbee2mqtt/data/configuration.yaml
+echo "  base_topic: zigbee2mqtt" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "  server: 'mqtt://localhost'" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "# user: my_user" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "# password: my_password" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "serial:" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "  port: /dev/ttyACM0" >> /opt/zigbee2mqtt/data/configuration.yaml
 
 echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
 echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
@@ -68,7 +74,7 @@ echo "StandardOutput=inherit" >> /etc/systemd/system/zigbee2mqtt.service
 echo "StandardError=inherit" >> /etc/systemd/system/zigbee2mqtt.service
 echo "Restart=always" >> /etc/systemd/system/zigbee2mqtt.service
 echo "RestartSec=10s" >> /etc/systemd/system/zigbee2mqtt.service
-echo "User=pi" >> /etc/systemd/system/zigbee2mqtt.service
+echo "User=root" >> /etc/systemd/system/zigbee2mqtt.service
 echo "[Install]" >> /etc/systemd/system/zigbee2mqtt.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/zigbee2mqtt.service
 
