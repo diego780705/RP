@@ -1,42 +1,19 @@
 #!/bin/bash
 
 sudo -i
-#AJUSTA O FUSO DA MAQUINA
-timedatectl set-timezone America/Sao_Paulo
 
-#FAZ UMA ATUALIZAÇÃO COMPLETA DO SISTEMA
-apt update -y && apt upgrade -y && apt autoremove -y 
+sudo timedatectl set-timezone America/Sao_Paulo
 
-#INSTALA REQUISITOS SISTEMICOS BASICOS PARA USO EM GERAL
-apt-get install \
-jq \
-wget \
-curl \
-udisks2 \
-libglib2.0-bin \
-network-manager \
-iputils-ping \
-firewalld \
-vim \
-openssh-server \
-dbus -y
+sudo apt update -y && apt upgrade -y && apt autoremove -y 
 
-#AMPLIA A MEMORIA DO UBUNTU PARA EVITAR TRAVAMENTOS
-fallocate -l 3G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-swapon --show
-cp /etc/fstab /etc/fstab.bak
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+sudo fallocate -l 3G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon --show
+sudo cp /etc/fstab /etc/fstab.bak
+sudo echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
-#ABRE AS PORTAS DO SISTEMA
-systemctl enable firewalld
-firewall-cmd --permanent --add-port=1-65535/tcp
-firewall-cmd --reload
-systemctl start firewalld
-
-#CONFIGURA O ACESSO SSH BASICO
 echo "Include /etc/ssh/sshd_config.d/*.conf" > /etc/ssh/sshd_config
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
@@ -47,26 +24,37 @@ echo "PrintMotd no" >> /etc/ssh/sshd_config
 echo "AcceptEnv LANG LC_*" >> /etc/ssh/sshd_config
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "Subsystem       sftp    /usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
-service ssh restart
+sudo service ssh restart
 
-#INSTALA A BASE DO ZIGBEE2MQTT
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-apt-get install -y nodejs git make g++ gcc
-git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
-cd /opt/zigbee2mqtt
-npm ci
+sudo ls -l /dev/ttyACM0
 
-#ESCREVE O ARQUIVO DE CONFIGURAÇÃO DO ZIGBEE2MQTT
-echo "mqtt:" > /opt/zigbee2mqtt/data/configuration.yaml
+sudo ls -l /dev/serial/by-id
+
+sudo curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+sudo apt-get install -y nodejs git make g++ gcc
+
+sudo git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
+
+cd /opt/zigbee2mqtt  
+
+sudo npm ci
+
+sudo npm install 
+
+sudo -g npm@8.13.2 
+
+echo "homeassistant: true" > /opt/zigbee2mqtt/data/configuration.yaml
+echo "permit_join: true" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "mqtt:" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  base_topic: zigbee2mqtt" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  server: 'mqtt://localhost'" >> /opt/zigbee2mqtt/data/configuration.yaml
-echo "# user: my_user" >> /opt/zigbee2mqtt/data/configuration.yaml
-echo "# password: my_password" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "  user: 'my_user'" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "  password: 'my_password'" >> /opt/zigbee2mqtt/data/configuration.yaml
+echo "frontend: true" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "serial:" >> /opt/zigbee2mqtt/data/configuration.yaml
 echo "  port: /dev/ttyACM0" >> /opt/zigbee2mqtt/data/configuration.yaml
-echo "frontend: true" >> /opt/zigbee2mqtt/data/configuration.yaml
 
-#ESCREVE O ARQUIVO DE EXECUÇÃO EM SEGUNDO PLANO E INICIALIZAÇÃO AUTOMATICA DO SISTEMA ZIGBEE 
 echo "[Unit]" > /etc/systemd/system/zigbee2mqtt.service
 echo "Description=zigbee2mqtt" >> /etc/systemd/system/zigbee2mqtt.service
 echo "After=network.target" >> /etc/systemd/system/zigbee2mqtt.service
@@ -81,8 +69,9 @@ echo "User=root" >> /etc/systemd/system/zigbee2mqtt.service
 echo "[Install]" >> /etc/systemd/system/zigbee2mqtt.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/zigbee2mqtt.service
 
-#FINALIZA E INICIA O ZIGBEE2MQTT
-systemctl start zigbee2mqtt
-systemctl enable zigbee2mqtt.service
+cd /etc/systemd/system/zigbee2mqtt.service
+sudo cp zigbee2mqtt.service /lib/systemd/system/
+sudo systemctl start zigbee2mqtt
+sudo systemctl enable zigbee2mqtt.service
 cd /opt/zigbee2mqtt
 npm start
