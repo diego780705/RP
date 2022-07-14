@@ -68,7 +68,7 @@ service ssh restart
 # - All values MUST be placed inside 'single quotes'
 # - DO NOT use these special characters within values: \ " '
 
-YOUR_IPSEC_PSK='V5432167890'
+YOUR_IPSEC_PSK='admin'
 YOUR_USERNAME='admin'
 YOUR_PASSWORD='5432167890'
 
