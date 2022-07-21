@@ -1,6 +1,6 @@
 var X = msg.payload;
 
-Y = X.replace('texto-ou-numero','');
+var Y = X.replace('texto-ou-numero','');
 
 msg.payload = Y
 
