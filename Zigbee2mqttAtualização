@@ -1,10 +1,12 @@
-# RP
+#!/bin/bash
 
 sudo -i
 
+timedatectl set-timezone America/Sao_Paulo
+
 apt update -y && apt upgrade -y && apt autoremove -y 
 
-sudo systemctl stop zigbee2mqtt
+systemctl stop zigbee2mqtt
 
 cd /opt/zigbee2mqtt
 
@@ -18,4 +20,4 @@ cp -R data-backup/* data
 
 rm -rf data-backup
 
-sudo systemctl start zigbee2mqtt
+systemctl start zigbee2mqtt
