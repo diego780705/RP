@@ -1,0 +1,21 @@
+# RP
+
+sudo -i
+
+apt update -y && apt upgrade -y && apt autoremove -y 
+
+sudo systemctl stop zigbee2mqtt
+
+cd /opt/zigbee2mqtt
+
+cp -R data data-backup
+
+git pull
+
+npm ci
+
+cp -R data-backup/* data
+
+rm -rf data-backup
+
+sudo systemctl start zigbee2mqtt
