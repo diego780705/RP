@@ -2,15 +2,15 @@
 
 sudo -i
 
-timedatectl set-timezone America/Sao_Paulo
+sudo timedatectl set-timezone America/Sao_Paulo
 
-apt update -y && apt upgrade -y && apt autoremove -y 
+sudo apt update -y && apt upgrade -y && apt autoremove -y 
 
-systemctl stop zigbee2mqtt
+sudo systemctl stop zigbee2mqtt
 
 cd /opt/zigbee2mqtt
 
-cp -R data data-backup
+sudo cp -R data data-backup
 
 git pull
 
