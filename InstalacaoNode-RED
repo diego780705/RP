@@ -1,0 +1,38 @@
+#OBS - Execute o comando sem o numero no iníco
+#OBS/2 - Tudo que inicia com # não é um comando
+
+#==================================================
+
+# Instalação
+
+1 sudo timedatectl set-timezone America/Sao_Paulo
+
+2 sudo apt update -y && apt upgrade -y && apt autoremove -y 
+
+3 sudo apt install build-essential git curl
+
+4 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
+
+5 sudo systemctl enable nodered.service
+
+#==================================================
+
+# Comando para configurar acesso e outras opções
+
+1 node-red admin init
+
+#==================================================
+
+# Execute esse bloco copiando e colando no 
+# terminao de uma unica vez para melhorar a 
+# capacidade de memória do seu sistema 
+# (indicado para sistemas com menos de 1g de memória)
+
+
+1 fallocate -l 3G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show
+cp /etc/fstab /etc/fstab.bak
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
