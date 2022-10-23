@@ -1,0 +1,11 @@
+# COPIE A LINHA DE CÓDIGO SEM O NÚMERO E O TRAÇO
+
+1 - sudo timedatectl set-timezone America/Sao_Paulo
+
+2 - sudo apt update -y && apt upgrade -y && apt autoremove -y 
+
+3 - sudo apt install build-essential git curl
+
+4 - bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
+
+5 - sudo systemctl enable nodered.service
