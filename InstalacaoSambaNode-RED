@@ -14,7 +14,6 @@
         server role = standalone server
         passdb backend = smbpasswd
         map to guest = bad user
-
 [Arquivos]
         path = /
         guest ok = yes
