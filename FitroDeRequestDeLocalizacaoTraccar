@@ -6,7 +6,7 @@ msg.payload = {
     "command": {
         "draggable": true,
         "zoom": 16,
-        "name": "Diego",    
+        "name": "NOME DO DISPOSITIVO LOCALIZADO",    
         "lat": latitude,
         "lon": longitude,
         "radius": 10,   
