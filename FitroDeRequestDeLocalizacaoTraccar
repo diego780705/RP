@@ -3,22 +3,17 @@ var longitude = msg.payload[0].longitude;
 var bateria = msg.payload[0].attributes.batteryLevel;
 
 msg.payload = {
-    "name": "NOME DA PESSOA OU DISPOSITIVO",
-    "delete": true,
-    "draggable": true,
-    "lat": latitude,
-    "lon": longitude,
-    "radius": 10,
-    "layer": "drawing",
-    "iconColor": '#000000',
-    "stroke": false,
-    "fillOpacity": 1,
-    "clickable": true,
-    "zoom": 16
+    "command": {
+        "draggable": true,
+        "zoom": 16,
+        "name": "Diego",    
+        "lat": latitude,
+        "lon": longitude,
+        "radius": 10,   
+        "iconColor": '#000000'   
+    } 
 };
 
-msg.latitude = latitude;
-msg.longitude = longitude;
 msg.bateria = bateria;
 
 return msg;
