@@ -15,38 +15,41 @@ return msg;
 
 3 - Templante para dashboard node-red e uso simplificado do chatgpt
 
-<style>   
+<style>
     .total@ {
-        display: flex;        
+        display: flex;
         flex-direction: column;
         text-align: center;
         margin: auto;
-        background-color: #ffffff;        
-        border-radius: 10px;        
+        background-color: #ffffff;
+        border-radius: 10px;
         width: 275px;
-    }     
-    .resposta@ {   
+        border: 1px solid #000000;
+    }
+
+    .resposta@ {
         max-width: 240px;
         margin: auto;
-        text-align: center;        
+        text-align: center;
         font-size: 10px;
-    }    
+    }
+
     .pergunta@ {
-        width: 240px;       
+        width: 240px;
         margin: auto;
         padding: 4px 4px;
         box-sizing: border-box;
         background-color: #ffffff;
         border-radius: 10px;
         text-align: center;
-    }      
+    }
 </style>
 
 <div class="total@">
     <br>
-    <div class="resposta@">{{msg.payload}}</div>       
+    <div class="resposta@">{{msg.payload}}</div>
     <br>
-    <input class="pergunta@" type="text" placeholder="Pergunta"/>    
+    <input class="pergunta@" type="text" placeholder="Pergunta"/>
     <br>
 </div>
 
@@ -61,4 +64,3 @@ return msg;
         });
     })(scope);
 </script>
-
