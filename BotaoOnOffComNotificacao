@@ -64,6 +64,7 @@
             } else {
                 ON()
                 scope.send({"payload": "ON"});
+                document.querySelector('.popup60').showModal();
             }        
         });
         
@@ -90,8 +91,7 @@
             $(".botao60").data("state", "ON");
             document.querySelector('.icone60').style.textShadow = "0px 0px 10px #BD960B";
             document.querySelector('.icone60').style.color = "#BD960B";
-            document.querySelector('.icone60').innerHTML = "power_settings_new";
-            document.querySelector('.popup60').showModal();
+            document.querySelector('.icone60').innerHTML = "power_settings_new";            
         }
         
     })(scope);
