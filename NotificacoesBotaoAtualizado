@@ -6,36 +6,37 @@
         flex-direction: column;    
     }
     .fechar01 {
-        font-size: 10px;
+        font-size: 15px;
         background-color: #d1d1d1 !important;
         color: #000000 !important;
         border-radius: 15px;
         border: 1px solid #8C8C8C;
-        width: 40%;
+        width: 50%;
     }
 </style>
 
 <dialog class="popup01">
     <div class="total01"
-        <div>Mensagem!</div>
+        <div>MENSAGEM</div>
         <br>        
-        <md-button class="fechar01" ng-click="fechar01()">Fechar</md-button> 
+        <button class="fechar01">Fechar</button> 
     </div>          
 </dialog>
 
 <script>
     (function(scope) {        
-        const modal = document.querySelector('.popup01')      
+        
         scope.$watch('msg', function(msg) {            
             if (msg.payload === "ON") {
-                modal.showModal()
+                document.querySelector('.popup01').showModal();
                 scope.send({"payload": "ON"});
-            }            
+            }
         });
         
-        scope.fechar01 = function() {
-            modal.close()
-        }
+        $('.fechar01').on('click', function() {
+            document.querySelector('.popup01').close();
+        });
+        
     })(scope);
 </script>
 
