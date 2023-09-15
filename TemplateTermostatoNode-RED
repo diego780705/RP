@@ -1,5 +1,6 @@
 ##################### 01 ATUALIZADA
 
+
 var temp = parseFloat(msg.payload.temperature);
 var umR = parseFloat(msg.payload.humidity);
 var bat = parseFloat(msg.payload.battery);
