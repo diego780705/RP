@@ -45,7 +45,7 @@
 <div class="total01">
     <button class="botao01">
         <div class="titulo01">Titulo</div>
-        <i class="icone01 material-icons" style="text-shadow: 0px 0px 0px; color: 018C8C8C;">deck</i>
+        <i class="icone01 material-icons" style="text-shadow: 0px 0px 0px; color: 018C8C8C;">lightbulb</i>
     </button>
     <input type="time" class="selecaohora01" />
 </div>
@@ -102,7 +102,7 @@
             $(".botao01").data("state", "OFF");
             document.querySelector('.icone01').style.textShadow = "0px 0px 0px";
             document.querySelector('.icone01').style.color = "#8C8C8C";
-            document.querySelector('.icone01').innerHTML = "deck";
+            document.querySelector('.icone01').innerHTML = "lightbulb";
         }
 
         function ON() {
@@ -112,7 +112,7 @@
             $(".botao01").data("state", "ON");
             document.querySelector('.icone01').style.textShadow = "0px 0px 10px #BD960B";
             document.querySelector('.icone01').style.color = "#BD960B";
-            document.querySelector('.icone01').innerHTML = "deck";
+            document.querySelector('.icone01').innerHTML = "lightbulb";
         }
     })(scope);
 </script>
