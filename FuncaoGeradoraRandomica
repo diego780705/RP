@@ -1,0 +1,1 @@
+node.send([{ payload: Math.round(Math.random() * 100) }])
