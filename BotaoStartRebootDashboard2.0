@@ -4,9 +4,9 @@
       <div class="title_reboot">Reboot</div>
       <v-icon class="icon_reboot" ref="icon">{{icon}}</v-icon>
     </v-btn>
-    <v-dialog class="dialog_reboot" v-model="dialog">
-      <v-text-field class="text_dialog_reboot" label="Senha" variant="outlined" v-model="senha" @keyup.enter="closedialog"></v-text-field>
-      <v-btn class="btn_dialog_reboot" @click="closedialog">Autorizar</v-btn>
+    <v-dialog class="dialog_reboot" v-model="dialog" @click:outside="closedialog_b">
+      <v-text-field class="text_dialog_reboot" label="Senha" variant="outlined" v-model="senha" @keyup.enter="closedialog_a"></v-text-field>
+      <v-btn class="btn_dialog_reboot" @click="closedialog_a">Autorizar</v-btn>
     </v-dialog>
   </div>
 </template>
@@ -25,20 +25,21 @@
         this.dialog = true;
         this.$refs.button.$el.style.backgroundColor = '#FF8C00';
       },
-      closedialog() {
+      closedialog_a() {
         if (this.senha === '780705') { 
-          this.dialog = false;
-          this.ligar();
           this.senha = ''
           this.$refs.button.$el.style.backgroundColor = '#4F4F4F';
+          this.send({ payload: 'reboot' });
+          this.dialog = false;       
         } else {
           this.senha = ''
-          this.$refs.button.$el.style.backgroundColor = '#4F4F4F';
         }
       },
-      ligar() {     
-        this.send({ payload: 'reboot' });
-      }     
+      closedialog_b() {
+        this.$refs.button.$el.style.backgroundColor = '#4F4F4F';
+        this.senha = ''
+        this.dialog = false;
+      },           
     }
   };
 </script>
